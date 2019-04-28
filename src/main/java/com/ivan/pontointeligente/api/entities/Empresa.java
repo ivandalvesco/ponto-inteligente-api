@@ -15,30 +15,27 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-
-
 @Entity
-@Table(name="empresa")
-public class Empresa implements Serializable{
-	
+@Table(name = "empresa")
+public class Empresa implements Serializable {
+
 	private Long id;
 	private String razaoSocial;
 	private String cnpj;
 	private Date dataCriacao;
 	private Date dataAtualizacao;
 	private List<Funcionario> funcionarios;
-	
-	
+
 	public Empresa() {
 		super();
 	}
-	
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -47,42 +44,43 @@ public class Empresa implements Serializable{
 	public String getRazaoSocial() {
 		return razaoSocial;
 	}
-	
+
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
 	}
-	
-	
+
 	@Column(name = "cnpj", nullable = false)
 	public String getCnpj() {
 		return cnpj;
 	}
-	
+
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	
-	
+
 	@Column(name = "data_criacao", nullable = false)
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}
+
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
+
 	@Column(name = "data_atualizacao", nullable = false)
 	public Date getDataAtualizacao() {
 		return dataAtualizacao;
 	}
+
 	public void setDataAtualizacao(Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
-	
+
 	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<Funcionario> getFuncionarios() {
 		return funcionarios;
 	}
+
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
@@ -91,19 +89,17 @@ public class Empresa implements Serializable{
 	public void preUpdate() {
 		dataAtualizacao = new Date();
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		final Date atual = new Date();
 		dataCriacao = atual;
 		dataAtualizacao = atual;
 	}
-	
-	
+
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Empresa [razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", dataCriacao=" + dataCriacao + "]";
 	}
-	
-	
+
 }
