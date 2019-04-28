@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +30,7 @@ public class Lancamento implements Serializable{
 	@Column(name = "data", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
-	@Column(name = "descricao", nullable = false)
+	@Column(name = "descricao", nullable = true)
 	private String descricao;
 	@Column(name = "localizacao", nullable = true)
 	private String localizacao;
@@ -86,7 +88,27 @@ public class Lancamento implements Serializable{
 	public void setTipo(TipoEnum tipo) {
 		this.tipo = tipo;
 	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 	
 	
+	@PreUpdate
+	public void preUpdate() {
+		dataAtualizacao = new Date();
+	}
+
+	@PrePersist
+	public void prePersist() {
+		final Date atual = new Date();
+		dataCriacao = atual;
+		dataAtualizacao = atual;
+	}
+
 
 }
