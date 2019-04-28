@@ -39,6 +39,10 @@ public class Empresa implements Serializable{
 		return id;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Column(name = "razao_social", nullable = false)
 	public String getRazaoSocial() {
 		return razaoSocial;
